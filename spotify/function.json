@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "tableName": "database",
+      "connection": "AzureWebJobsStorage",
+      "name": "database",
+      "type": "table",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../dist/spotify/index.js"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "spotify-now-playing-azure",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "yarn build && func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "azure-storage": "^2.10.4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.1",
+    "@azure/functions": "^1.2.3",
+    "@types/azure": "^0.9.20",
+    "typescript": "^4.0.0"
+  }
+}
