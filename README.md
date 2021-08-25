@@ -3,7 +3,9 @@
 
 > My AWS credits recently expired! Which means...cloud hopping.
 
- The successor to my [Spotify "Now Playing" with AWS Lambda](https://joshspicer.com/spotify-now-playing) website snippet.  Now hosted on Azure with Functions in Typescript (instead of AWS with Lambda in python - see [that version here](https://github.com/joshspicer/Spotify-Lambda-Functions)).  
+ The successor to my [Spotify "Now Playing" with AWS Lambda](https://joshspicer.com/spotify-now-playing) website snippet.  Now hosted on Azure with Functions in Typescript (instead of AWS with Lambda in python - see [that version here](https://github.com/joshspicer/Spotify-Lambda-Functions)).
+ 
+ See it in action on [my website](https:://joshspicer.com/).
 
 
 ## Setup
