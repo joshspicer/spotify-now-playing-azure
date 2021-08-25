@@ -4,6 +4,7 @@ import FormData = require('form-data');
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { AuthPayload, NowPlaying } from "./contracts";
 import { date } from "azure-storage";
+import { CurrentlyPlaying, Track } from "spotify-types";
 var azure = require('azure-storage');
 
 
@@ -88,20 +89,23 @@ const getNowPlaying = async function (accessToken: string, context: Context): Pr
         "Accept": "application/json"
     };
 
-    const res = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', { headers })
+    const res: AxiosResponse<CurrentlyPlaying> = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', { headers })
 
     if (res.status > 299) {
         console.error("Error with currently-playing API call.", res.statusText)
         context.res.status = res.status;
     }
 
-    const responseJson = JSON.parse(res.data)
+    if (res.data.is_playing === false || res.data.currently_playing_type !== 'track') {
+        // Josh last played...
+    } 
 
-    isPlaying = responseJson.item.name
+    const track = res.data.item as Track
 
-    return {
-
-    }
+    songName = track.name
+    isPlaying = res.data.is_playing
+    artistName = track.artists[0].name
+    response = 
     
 
 

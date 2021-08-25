@@ -401,6 +401,11 @@ sax@0.5.x:
   resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
   integrity sha1-1HLbIo6zMcJQaw6MFVJK25OdEsE=
 
+spotify-types@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/spotify-types/-/spotify-types-1.0.0.tgz#a7227644439b42f0653803c144e38dc043852bcd"
+  integrity sha512-WAAsmN6rhshF0QyNyBz8ujbk0FYgEMrF2/xSByvnKe15U9xqrXxzzuNDEf7i1e5B7/Tz0jeBGpHh6YfRRr2DUw==
+
 sshpk@^1.7.0:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.16.1.tgz#fb661c0bef29b39db40769ee39fa70093d6f6877"

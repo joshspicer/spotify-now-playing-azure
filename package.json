@@ -12,7 +12,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "azure-storage": "^2.10.4",
-    "form-data": "^4.0.0"
+    "form-data": "^4.0.0",
+    "spotify-types": "^1.0.0"
   },
   "devDependencies": {
     "@azure/functions": "^1.2.3",
