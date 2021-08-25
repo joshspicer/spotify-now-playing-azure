@@ -4,7 +4,7 @@ import FormData = require('form-data');
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { AuthPayload, NowPlaying } from "./contracts";
 import { date } from "azure-storage";
-import { CurrentlyPlaying, Track } from "spotify-types";
+import { CurrentlyPlaying, Track, PlayHistory } from "spotify-types";
 var azure = require('azure-storage');
 
 
@@ -97,15 +97,33 @@ const getNowPlaying = async function (accessToken: string, context: Context): Pr
     }
 
     if (res.data.is_playing === false || res.data.currently_playing_type !== 'track') {
-        // Josh last played...
-    } 
+        // Josh isn't listening to music, get his last played song.
+        const res: AxiosResponse = await axios.get('https://api.spotify.com/v1/me/player/recently-played', { headers })
 
-    const track = res.data.item as Track
+        if (res.status > 299) {
+            console.error("Error with recently-played API call.", res.statusText)
+            context.res.status = res.status;
+        }
 
-    songName = track.name
-    isPlaying = res.data.is_playing
-    artistName = track.artists[0].name
-    response = 
+        const playHistory: PlayHistory[] = res.data.items
+
+        console.log(playHistory[0]);
+
+        const recentTrack = playHistory[0].track
+
+        songName = recentTrack.name
+        isPlaying = false
+        artistName = recentTrack.artists[0].name
+        response = `Josh last listened to ${songName} by ${artistName} on spotify.`
+    } else {
+        const track = res.data.item as Track
+    
+        songName = track.name
+        isPlaying = res.data.is_playing
+        artistName = track.artists[0].name
+        response = `Josh is currently listening to ${songName} by ${artistName} on spotify.`
+    }
+
     
 
 
@@ -128,8 +146,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const now = new Date()
     console.log(`Comparing ${expiry} <= ${now}`)
     if (expiry <= now) {
-        console.log("refreshing....")
+        console.log("Cached creds ---> Refreshing.")
         accessToken = await refreshToken(context)
+    } else {
+        console.log("Cached Creds ---> Using.")
     }
 
     const nowPlaying: NowPlaying = await getNowPlaying(accessToken, context);
