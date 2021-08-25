@@ -1,13 +1,17 @@
+/*
+    Spotify Now Playing: Azure Function
+    Author:         Josh Spicer <hello@joshspicer.com>
+    Info:           http://spcr.me/spotify-now-playing-azure
+
+*/
+
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import { exit } from "process";
-import FormData = require('form-data');
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {  AxiosResponse } from "axios";
 import { AuthPayload, NowPlaying } from "./contracts";
 import { date } from "azure-storage";
 import { CurrentlyPlaying, Track, PlayHistory } from "spotify-types";
 var azure = require('azure-storage');
-
-
 
 const refreshToken = async function (context: Context): Promise<string> {
 
@@ -124,10 +128,6 @@ const getNowPlaying = async function (accessToken: string, context: Context): Pr
         response = `Josh is currently listening to ${songName} by ${artistName} on spotify.`
     }
 
-    
-
-
-
     return {
         artistName,
         isPlaying,
@@ -135,7 +135,6 @@ const getNowPlaying = async function (accessToken: string, context: Context): Pr
         songName
     }
 }
-
 
 // Entrypoint
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest, cachedAuth: any): Promise<void> {
@@ -146,10 +145,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const now = new Date()
     console.log(`Comparing ${expiry} <= ${now}`)
     if (expiry <= now) {
-        console.log("Cached creds ---> Refreshing.")
+        console.log("[+] Refreshing.")
         accessToken = await refreshToken(context)
     } else {
-        console.log("Cached Creds ---> Using.")
+        console.log("[+] Using.")
     }
 
     const nowPlaying: NowPlaying = await getNowPlaying(accessToken, context);
