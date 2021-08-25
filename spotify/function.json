@@ -15,11 +15,13 @@
       "name": "res"
     },
     {
-      "tableName": "database",
-      "connection": "AzureWebJobsStorage",
-      "name": "database",
+      "name": "cachedAuth",
       "type": "table",
-      "direction": "out"
+      "tableName": "database",
+      "partitionKey": "primary",
+      "rowKey": "auth",
+      "connection": "AzureWebJobsStorage",
+      "direction": "in"
     }
   ],
   "scriptFile": "../dist/spotify/index.js"
